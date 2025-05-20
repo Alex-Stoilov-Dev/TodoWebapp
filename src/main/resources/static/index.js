@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value;
 
-        const newTodo = { title, todo: description };  // <-- Your backend expects `todo`, not `description`
+        const newTodo = { title, todo: description };  //
 
         fetch('/api/todo', {  // <-- Always add leading `/` in fetch URLs
             method: 'POST',
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const updatedTodo = { id: parseInt(id), title, todo: description };
 
-        fetch(`/api/todo/${id}`, {   // <-- Fix 1 — correct template literal
+        fetch(`/api/todo/${title}`, {   // <-- Fix 1 — correct template literal
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedTodo)

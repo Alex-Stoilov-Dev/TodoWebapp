@@ -1,52 +1,54 @@
 package com.Todos.todo_list.service;
 
 import com.Todos.todo_list.api.model.Todo;
+import com.Todos.todo_list.api.repository.TodoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoService {
 
+    private final TodoRepository todoRepository;
     private List<Todo> todosList;
 
-    public TodoService() {
+    public TodoService(TodoRepository todoRepository) {
         todosList = new ArrayList<>();
-
-        Todo todo1 = new Todo(1,"Walk Dog","Walk the dog around the block");
-        Todo todo2 = new Todo(2,"Buy Groceries","Buy groceries: milk, eggs, bread");
-        Todo todo3 = new Todo(3,"Take out trash","Take out the trash before work");
-
-        todosList.addAll(Arrays.asList(todo1, todo2, todo3));
-
-
+        this.todoRepository = todoRepository;
     }
 
     public List<Todo> getAllTodos() {
         return todosList;
     }
+
+
     public void addTodo(Todo todo){
         todosList.add(todo);
     }
 
-    public void updateTodo(int id, Todo updatedTodo){
-        for (Todo todo : todosList) {
-            if(todo.getId() == id){
-                todo.setTitle(updatedTodo.getTitle());
-                todo.setTodo(updatedTodo.getTodo());
-                break;
-            }
+    public void updateTodo(Integer id, Todo updatedTodo){
+        Optional<Todo> existingTodoOptional = todoRepository.findById(id);
+
+        if(existingTodoOptional.isPresent()){
+            Todo existingTodo = existingTodoOptional.get();
+            existingTodo.setTitle(updatedTodo.getTitle());
+            existingTodo.setTodo(updatedTodo.getTodo());
+        }
+        else {
+            throw new EntityNotFoundException("Todo with this ID ->" + id + "<- not found.");
         }
     }
 
-    public void deleteTodo(int id){
-        for (Todo todo : todosList) {
-            if(todo.getId() == id){
-                todosList.remove(todo);
-                break;
-            }
+    public void deleteTodo(Integer id){
+        Optional<Todo> exisitingTodoOptional = todoRepository.findById(id);
+        if(exisitingTodoOptional.isPresent()){
+            todoRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Todo with this ID ->" + id + "<- not found.");
         }
     }
 
