@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newTodo = { title, todo: description };  //
 
-        fetch('/api/todo', {  // <-- Always add leading `/` in fetch URLs
+        fetch('/api/save', {  // <-- Always add leading `/` in fetch URLs
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newTodo)
@@ -29,11 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const id = document.getElementById('update-id').value;
         const title = document.getElementById('update-title').value;
         const description = document.getElementById('update-description').value;  // <-- Fix 2
 
-        const updatedTodo = { id: parseInt(id), title, todo: description };
+        const updatedTodo = { title, todo: description };
 
         fetch(`/api/todo/${title}`, {   // <-- Fix 1 — correct template literal
             method: 'PUT',
@@ -49,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function fetchTodos() {
-        fetch('/api/todo')
+        fetch('/api/getTodos')
             .then(response => response.json())
             .then(todos => {
                 todoList.innerHTML = '';
@@ -64,15 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Move BOTH of these INSIDE DOMContentLoaded — Fix 5
-    window.editTodo = function (id, title, description) {
-        document.getElementById('update-id').value = id;
+    window.editTodo = function (title, description) {
         document.getElementById('update-title').value = title;
         document.getElementById('update-description').value = description;
         updateTodoSection.style.display = 'block';
     };
 
     window.deleteTodo = function (id) {
-        fetch(`/api/todo/${id}`, {   // <-- Fix 1 here too
+        fetch(`/api/todo/delete_${id}`, {   // <-- Fix 1 here too
             method: 'DELETE',
         })
             .then(() => fetchTodos())

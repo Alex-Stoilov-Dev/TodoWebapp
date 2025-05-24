@@ -36,17 +36,18 @@ public class TodoController {
         return todoRepository.findAll();
     }
 
-
+/*
     @GetMapping("/todo")
     public List<Todo> getTodos(){
         return todoService.getAllTodos();
     }
-
+*/
+/*
     @PostMapping("/todo")
     public void addTodo(@RequestBody Todo todo){
         todoService.addTodo(todo);
     }
-
+*/
     @PutMapping("/todo/{id}")
     public ResponseEntity<String> updateTodo(@PathVariable Integer id, @RequestBody Todo updateTodo){
         try{
