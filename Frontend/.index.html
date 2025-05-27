@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <!-- Titul na stranicata mislq -->
+    <header>
+        <h1>Todo List</h1>
+    </header>
+
+    <!-- Spisuk sus Zadachite -->
+    <section id="todo-list">
+        <h2>To Do List</h2>
+        <ul id="todos">
+            <!-- Tuk shte izliza spisukut sus zadachi. Generira se dinamichno -->
+        </ul>
+    </section>
+    <!-- Dobavqne na Zadachki -->
+    <section id="add-todo">
+        <h2>Add New Todo</h2>
+        <form id="add-todo-form">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Enter Title" required>
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Enter Description" rows="4" cols="40" required></textarea>
+            <button type="submit">Add Todo</button>
+        </form>
+    </section>
+    <!-- Aktualizirane na spisuka sus zadachi-->
+    <section id ="update-todo">
+        <h2>Update Todo</h2>
+        <form id="update-todo-form">
+            <input type="hidden" id="update-id">
+            <label for="update-title">Title</label>
+            <input type="text" id="update-title" name="update-title" placeholder="Enter Title" required>
+            <label for="update-description">Description</label>
+            <textarea id="update-description" placeholder="Enter Description" rows="4" cols="40" required></textarea>
+            <button type="submit">Update Todo</button>
+        </form>
+    </section>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
